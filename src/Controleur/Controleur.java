@@ -1,6 +1,7 @@
 package Controleur;
 
 import Modele.ModeleJeu;
+import javax.swing.JOptionPane;
 
 public class Controleur{
     private final ModeleJeu game;
@@ -22,9 +23,11 @@ public class Controleur{
             game.getGrille().propagationVoisins(game.getGrille().getCases()[numcase]);
             if(game.testPartieTerminee(numcase)==ModeleJeu.etat.DEFAITE){
                 game.setEtatPartie(ModeleJeu.etat.DEFAITE);
+                JOptionPane.showMessageDialog(null, "Veuillez avez perdu !") ;
             }
             else if(game.testPartieTerminee(numcase)==ModeleJeu.etat.VICTOIRE){
-                game.setEtatPartie(ModeleJeu.etat.VICTOIRE);            
+                game.setEtatPartie(ModeleJeu.etat.VICTOIRE);           
+                JOptionPane.showMessageDialog(null, "Veuillez avez gagné !") ;
             }
             game.setEnvoieNotif(true);
         }

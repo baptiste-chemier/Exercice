@@ -11,18 +11,23 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JTextField;
 import Controleur.Controleur;
 import Modele.ModeleJeu;
+import static Modele.ModeleJeu.etat.ENCOURS;
+import javax.swing.JOptionPane;
 
 public class VueJeu extends JFrame implements Observer {
     private final ModeleJeu modele ;
     private VueGrille jpGrille;
     private GridBagLayout layout;
     private GridBagConstraints gc;
-    private JMenu jMenu1;
-    private JMenuItem jMenuItem1;
-    private JMenuItem jMenuItem4;
+    private JMenu menuPartie;
+    private JMenu menuDifficulte;
+    private JMenuItem itemPartie;
+    private JMenuItem itemExit;
+    private JMenuItem itemFacile;
+    private JMenuItem itemMoyen;
+    private JMenuItem itemDifficile;
     private JMenuBar jMenuBar1;
 
     public VueJeu(ModeleJeu m){
@@ -50,37 +55,84 @@ public class VueJeu extends JFrame implements Observer {
         gc.gridy = 1;
         gc.insets = new Insets(5, 5, 5, 5);
         this.add(jpGrille, gc);   
-        // Barre de menu
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu1.setText("Partie");
-        jMenuBar1.add(jMenu1);
+        menuPartie = new javax.swing.JMenu();
+        menuDifficulte = new javax.swing.JMenu();
+        jMenuBar1.add(menuPartie);
+        jMenuBar1.add(menuDifficulte);
         setJMenuBar(jMenuBar1);
-        jMenuItem1.setText("Nouvelle Partie");
-        jMenu1.add(jMenuItem1);
-        jMenuItem1.addActionListener((java.awt.event.ActionEvent evt) -> {
+        itemPartie = new javax.swing.JMenuItem();
+        itemExit = new javax.swing.JMenuItem();
+        itemFacile = new javax.swing.JMenuItem();
+        itemMoyen = new javax.swing.JMenuItem();
+        itemDifficile = new javax.swing.JMenuItem();
+        menuPartie.setText("Partie");
+        itemPartie.setText("Recommencer");
+        menuPartie.add(itemPartie);
+        itemPartie.addActionListener((java.awt.event.ActionEvent evt) -> {
             jMenuItem1ActionPerformed(evt);
         });    
-        jMenuItem4.setText("Quitter");
-        jMenu1.add(jMenuItem4);
-        jMenuItem4.addActionListener((java.awt.event.ActionEvent evt) -> {
+        itemExit.setText("Quitter");
+        menuPartie.add(itemExit);
+        itemExit.addActionListener((java.awt.event.ActionEvent evt) -> {
+            jMenuItem2ActionPerformed(evt);
+        });
+        menuDifficulte.setText("Difficulte");
+        itemFacile.setText("Facile");
+        menuDifficulte.add(itemFacile);
+        itemFacile.addActionListener((java.awt.event.ActionEvent evt) -> {
+            jMenuItem3ActionPerformed(evt);
+        });  
+        itemMoyen.setText("Moyen");
+        menuDifficulte.add(itemMoyen);
+        itemMoyen.addActionListener((java.awt.event.ActionEvent evt) -> {
             jMenuItem4ActionPerformed(evt);
-        });      
+        });  
+        itemDifficile.setText("Difficile");
+        menuDifficulte.add(itemDifficile);
+        itemDifficile.addActionListener((java.awt.event.ActionEvent evt) -> {
+            jMenuItem5ActionPerformed(evt);
+        });  
         pack();     
     }                                
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {                                       
         Controleur c = new Controleur(modele);
         c.newParty(modele.getGrille().getNbCases(), modele.getGrille().getNbBombes());
-    }   
+    }      
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) { 
-    }       
-
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {                                       
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {                                       
         System.exit(1);
+    }  
+    
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        if(modele.getEtatPartie()!=ENCOURS)
+        {
+           Controleur c = new Controleur(modele);
+            c.newParty(modele.getGrille().getNbCases(), 10);         
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Veuillez terminer la partie avant") ;
+    }  
+        
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        if(modele.getEtatPartie()!=ENCOURS)
+        {
+           Controleur c = new Controleur(modele);
+            c.newParty(modele.getGrille().getNbCases(), 20);         
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Veuillez terminer la partie avant") ;
+    }  
+            
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        if(modele.getEtatPartie()!=ENCOURS)
+        {
+           Controleur c = new Controleur(modele);
+            c.newParty(modele.getGrille().getNbCases(), 30);         
+        }        
+        else
+            JOptionPane.showMessageDialog(null, "Veuillez terminer la partie avant") ;
     }  
 
     @Override

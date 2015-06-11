@@ -42,7 +42,6 @@ public abstract class ModeleGrille {
         if(courante.getId()/this.getNbCases()[0]==this.getNbCases()[1]-1)
             bas = true; 
         
-        
         if(!gauche)
             voisins.add(this.getCases()[courante.getId() - 1]);
         if(!droite)
@@ -51,6 +50,7 @@ public abstract class ModeleGrille {
             voisins.add(this.getCases()[courante.getId() - this.getNbCases()[0]]);     
         if(!bas)
             voisins.add(this.getCases()[courante.getId() + this.getNbCases()[0]]);
+        
         if(!haut && !gauche)
             voisins.add(this.getCases()[courante.getId() - 1 - this.getNbCases()[0]]);
         if(!haut && !droite)

@@ -59,15 +59,7 @@ public abstract class VueCase extends JPanel implements Observer{
         this.setBorder(BorderFactory.createRaisedBevelBorder());   
     }
     
-    public void caseMouseClicked(MouseEvent e) {
-        Controleur c = new Controleur(modele);
-        if(SwingUtilities.isLeftMouseButton(e))
-            c.leftClick(id);
-        if(SwingUtilities.isRightMouseButton(e)) 
-            c.rightClick(id);
-    }
-    
-    @Override
+        @Override
     public void update(Observable o, Object arg) {
         if(arg instanceof Boolean && !(boolean)arg){
             if(modele.getEtatPartie()==DEFAITE || modele.getEtatPartie()==VICTOIRE){
@@ -93,8 +85,21 @@ public abstract class VueCase extends JPanel implements Observer{
             repaint();
         }
     }  
-
-        public void afficherNbMinesVoisines(){
+    
+    public void afficherBombe(){
+        this.setBorder(BorderFactory.createLoweredBevelBorder());
+        label.setIcon(icones[0]);
+        if(id==modele.getGrille().getDerniereCase()){
+            this.setBackground(Color.white);
+            label.setIcon(icones[2]);
+        }
+    }
+    
+    public void afficheDrapeau(){
+        label.setIcon(icones[1]);
+    }
+   
+    public void afficherNbMinesVoisines(){
         int nbVoisinsPieges = modele.getGrille().getNombreVoisinsPieges(modele.getGrille().getCases()[id]);
         label.setText(Integer.toString(nbVoisinsPieges));  
         label.setIcon(null);
@@ -125,19 +130,6 @@ public abstract class VueCase extends JPanel implements Observer{
         }
     }
     
-    public void afficherBombe(){
-        if(id==modele.getGrille().getDerniereCase()){
-            this.setBackground(Color.red);
-        }else
-            this.setBackground(Color.pink);
-        this.setBorder(BorderFactory.createLoweredBevelBorder());
-        label.setIcon(icones[0]);
-    }
-    
-    public void afficheDrapeau(){
-        label.setIcon(icones[1]);
-    }
-    
     public void effaceIcone(){
         label.setIcon(null);
     }
@@ -152,5 +144,13 @@ public abstract class VueCase extends JPanel implements Observer{
         entered = true;
         if(!modele.getGrille().getCases()[id].isDecouverte() && modele.getEtatPartie()==ENCOURS)
             this.setBackground(new Color(206,206,206));
+    }
+    
+    public void caseMouseClicked(MouseEvent e) {
+        Controleur c = new Controleur(modele);
+        if(SwingUtilities.isLeftMouseButton(e))
+            c.leftClick(id);
+        if(SwingUtilities.isRightMouseButton(e)) 
+            c.rightClick(id);
     }
 }
