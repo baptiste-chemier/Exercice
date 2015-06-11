@@ -21,7 +21,7 @@ public final class ModeleJeu extends Observable implements Runnable {
     }  
 
     public void initPartie(int[] _nbCases, int _nbBombes){
-        grille = new ModelePlateau(_nbCases, _nbBombes);  
+        grille = new ModeleGrille(_nbCases, _nbBombes) {};  
         envoieNotif = false;
         envoieNotifReset = false;
         etatPartie = ENCOURS;  

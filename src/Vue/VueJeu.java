@@ -45,7 +45,7 @@ public class VueJeu extends JFrame implements Observer {
         gc.weighty = 2;
         gc.gridx = 0;
         gc.gridy = 0;
-        jpGrille = new GrilleCarreVue(modele); 
+        jpGrille = new VueGrille(modele); 
         gc.fill = GridBagConstraints.NONE;
         gc.gridx = 0;
         gc.gridy = 1;
@@ -88,7 +88,7 @@ public class VueJeu extends JFrame implements Observer {
     public void update(Observable o, Object arg) {
         if(arg instanceof Boolean && (boolean)arg){
             this.remove(jpGrille);
-            jpGrille = new GrilleCarreVue(modele);  
+            jpGrille = new VueGrille(modele);  
             modele.addObserver(this);
             gc.fill = GridBagConstraints.HORIZONTAL;
             gc.gridx = 0;
