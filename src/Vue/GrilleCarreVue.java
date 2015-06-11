@@ -1,22 +1,14 @@
-package packVue;
+package Vue;
 
 import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.*;
-import packModele.Demineur;
+import Modele.ModeleJeu;
 
-/**
- * Classe de la vue d'une grille carrée
- * @author François De Aveiro - Victor Giroud
- */
-public class GrilleCarreVue extends GrilleVue {
+public class GrilleCarreVue extends VueGrille {
     int nbcasesX, nbcasesY;
     
-    /**
-    * Constructeur de la vue d'une grille carrée
-     * @param m le modèle du démineur
-    */
-    public GrilleCarreVue(Demineur m){
+    public GrilleCarreVue(ModeleJeu m){
         super(m);
     }
   
@@ -25,15 +17,11 @@ public class GrilleCarreVue extends GrilleVue {
         this.setBorder(BorderFactory.createLoweredBevelBorder());
         int taillecase = 30;
         icones = new ImageIcon[2];
-        //icones[0] = iconeBombe(taillecase);
-        //icones[1] = iconeDrapeau(taillecase);  
-        
         nbcasesX = modele.getGrille().getNbCases()[0];
         nbcasesY = modele.getGrille().getNbCases()[1];
 	this.setLayout(new GridLayout(nbcasesY, nbcasesX)) ;    
         
-
-        CaseCarreVue cases;
+        VueAction cases;
         for (int i=0; i<nbcasesY*nbcasesX; i++) {
             int r = 190-(i/nbcasesX+i%nbcasesX)*3;
             int g = 244-(i/nbcasesX+i%nbcasesX);
@@ -45,9 +33,8 @@ public class GrilleCarreVue extends GrilleVue {
             if(b<0)
                 b=0;
             Color c = new Color(r,g,b);
-            cases = new CaseCarreVue(modele, i, taillecase, icones,c);
+            cases = new VueAction(modele, i, taillecase, icones,c);
             this.add(cases);
-            // On ajoute la vue au modèle
             modele.addObserver(cases);     
         }
     }

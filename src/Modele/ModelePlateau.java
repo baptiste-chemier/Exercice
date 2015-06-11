@@ -1,30 +1,21 @@
-package packModele;
+package Modele;
 
 import java.util.ArrayList;
 
-/**
- * Classe de création d'une grille de cases carrées
- * @author François De Aveiro - Victor Giroud
- */
-public class GrilleCarre extends Grille{
+public class ModelePlateau extends ModeleGrille{
 
-    /**
-     * Constructeur d'une grille de cases carrées
-     * @param _nbCases un tableau contenant le nombre de cases (largeur, hauteur, ..)
-     * @param _nbBombes le nombre de bombes dans la grille
-     */
-    public GrilleCarre(int _nbCases[], int _nbBombes){
+    public ModelePlateau(int _nbCases[], int _nbBombes){
         super(_nbCases, _nbBombes);
         nbCasesTotales = nbCases[0]*nbCases[1];
-        cases = new Case[nbCasesTotales];
+        cases = new ModeleCase[nbCasesTotales];
         for(int id=0; id<nbCasesTotales; id++){
-            cases[id] = new Case(false, id);
+            cases[id] = new ModeleCase(false, id);
         }
     }  
 
     @Override
-    public ArrayList<Case> getCasesVoisines(Case courante){
-        ArrayList<Case> voisins = new ArrayList();
+    public ArrayList<ModeleCase> getCasesVoisines(ModeleCase courante){
+        ArrayList<ModeleCase> voisins = new ArrayList();
         boolean bordgauche = false, borddroit = false, bordhaut = false, bordbas = false;
         if(courante.getId()%this.getNbCases()[0]==0)
             bordgauche = true;
@@ -53,5 +44,4 @@ public class GrilleCarre extends Grille{
             voisins.add(this.getCases()[courante.getId() + 1 + this.getNbCases()[0]]); 
         return voisins;
     }
-
 }

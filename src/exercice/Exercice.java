@@ -5,8 +5,8 @@
  */
 package exercice;
 
-import packModele.Demineur;
-import packVue.FenetrePrincipaleVue;
+import Modele.ModeleJeu;
+import Vue.VueJeu;
 
 /**
  *
@@ -20,8 +20,8 @@ public class Exercice {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        Demineur d = new Demineur();
-        FenetrePrincipaleVue fpv = new FenetrePrincipaleVue(d);
+        ModeleJeu d = new ModeleJeu();
+        VueJeu fpv = new VueJeu(d);
         fpv.setVisible(true);
     }
     

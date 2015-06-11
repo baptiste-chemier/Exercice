@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package packVue;
+package Vue;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,32 +14,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import packControleur.Controleur;
-import packModele.Demineur;
-import static packModele.Demineur.etat.*;
+import Controleur.Controleur;
+import Modele.ModeleJeu;
+import static Modele.ModeleJeu.etat.*;
 
-/**
- * Classe de la vue d'une case 
- * @author François De Aveiro - Victor Giroud
- */
-public abstract class CaseVue extends JPanel implements Observer{
-    Demineur modele;
+public abstract class VueCase extends JPanel implements Observer{
+    ModeleJeu modele;
     int id;
     JLabel label;
     ImageIcon[] icones;
     int taille;
     Color couleur;
     protected boolean entered;
-    
-    /**
-    * Constructeur de la vue d'une case
-    * @param m le modèle du démineur
-    * @param i l'identifiant de la case correspondante
-    * @param taillecase la taille de case (taillecase*taillecase)
-    * @param listeicones les icones utilisées pour le drapeau et la bombe
-    * @param color la couleur de la case
-    */
-    public CaseVue(Demineur m, int i, int taillecase, ImageIcon[] listeicones, Color color){
+
+    public VueCase(ModeleJeu m, int i, int taillecase, ImageIcon[] listeicones, Color color){
         modele = m;
         id = i;
         icones = listeicones;
@@ -76,14 +64,11 @@ public abstract class CaseVue extends JPanel implements Observer{
     
     public void caseMouseClicked(MouseEvent e) {
         Controleur c = new Controleur(modele);
-        // On appelle le controleur
         if(SwingUtilities.isLeftMouseButton(e))
             c.controleCaseClickedLeft(id);
         if(SwingUtilities.isRightMouseButton(e)) 
             c.controleCaseClickedRight(id);
-        //System.out.println("clic " + id);
     }
-    
     
     public void caseMousePressed(MouseEvent e) {
         if(SwingUtilities.isLeftMouseButton(e)){
@@ -97,7 +82,6 @@ public abstract class CaseVue extends JPanel implements Observer{
         c.caseReleased();
     }
     
-    
     public abstract void afficherNombre(); 
     public abstract void afficherBombe();
     public abstract void afficheDrapeau();
@@ -105,9 +89,7 @@ public abstract class CaseVue extends JPanel implements Observer{
     
     @Override
     public void update(Observable o, Object arg) {
-        // si la partie n'est pas réinitialisée
         if(arg instanceof Boolean && !(boolean)arg){
-            // si la partie est terminée
             if(modele.getEtatPartie()==DEFAITE || modele.getEtatPartie()==VICTOIRE){
                 if(modele.getGrille().getCases()[id].isPiege())
                     afficherBombe();
@@ -115,7 +97,7 @@ public abstract class CaseVue extends JPanel implements Observer{
                     afficherNombre();
                 else
                     effaceIcone(); 
-            } // si la partie est toujours en cours
+            }
             else if(id<modele.getGrille().getCases().length && modele.getGrille().getCases()[id].isDecouverte()){
                 if(modele.getGrille().getCases()[id].isPiege()){
                     afficherBombe();
@@ -130,6 +112,5 @@ public abstract class CaseVue extends JPanel implements Observer{
             }  
             repaint();
         }
-    }
-    
+    }  
 }

@@ -1,10 +1,10 @@
-package packModele;
+package Modele;
 
 /**
  * Classe de création d'une case 
  * @author François De Aveiro - Victor Giroud
  */
-public class Case {
+public class ModeleCase {
     private boolean piege;
     private boolean decouverte;
     private boolean drapeau;
@@ -15,7 +15,7 @@ public class Case {
     * @param _piege vrai si la case comporte une bombe 
     * @param _id l'identifiant de la case 
     */
-    public Case(boolean _piege, int _id){
+    public ModeleCase(boolean _piege, int _id){
         piege = _piege;
         decouverte = false;
         drapeau = false;

@@ -1,20 +1,16 @@
-package packVue;
+package Vue;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
-import packModele.Demineur;
-import static packModele.Demineur.etat.*;
+import Modele.ModeleJeu;
+import static Modele.ModeleJeu.etat.*;
 
-/**
- * Classe de la vue d'une case carré
- * @author François De Aveiro - Victor Giroud
- */
-public class CaseCarreVue extends CaseVue {    
+public class VueAction extends VueCase {    
 
-    public CaseCarreVue(Demineur m, int i, int taillecase, ImageIcon[] listeicones, Color color){
+    public VueAction(ModeleJeu m, int i, int taillecase, ImageIcon[] listeicones, Color color){
         super(m ,i ,taillecase, listeicones, color);
         this.add(label);     
         this.setBackground(color);     
@@ -60,7 +56,6 @@ public class CaseCarreVue extends CaseVue {
             default: label.setForeground(Color.black);
                 break;            
         }
-        
     }
     
     @Override
@@ -96,5 +91,4 @@ public class CaseCarreVue extends CaseVue {
         if(!modele.getGrille().getCases()[id].isDecouverte() && modele.getEtatPartie()==ENCOURS)
             this.setBackground(new Color(232,251,255));
     }
-    
 }

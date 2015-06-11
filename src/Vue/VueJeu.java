@@ -1,4 +1,4 @@
-package packVue;
+package Vue;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -12,29 +12,21 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTextField;
-import packControleur.Controleur;
-import packModele.Demineur;
+import Controleur.Controleur;
+import Modele.ModeleJeu;
 
-/**
- * Classe de la vue de la fenêtre principale du logiciel
- * @author François De Aveiro - Victor Giroud
- */
-public class FenetrePrincipaleVue extends JFrame implements Observer {
+public class VueJeu extends JFrame implements Observer {
     private JTextField jt ;
-    private final Demineur modele ;
-    private GrilleVue jpGrille;
+    private final ModeleJeu modele ;
+    private VueGrille jpGrille;
     private GridBagLayout layout;
     private GridBagConstraints gc;
     private JMenu jMenu1;
     private JMenuItem jMenuItem1;
     private JMenuItem jMenuItem4;
     private JMenuBar jMenuBar1;
-    
-    /**
-    * Constructeur d'une fenêtre de paramètres
-    * @param m le modèle du démineur
-    */
-    public FenetrePrincipaleVue(Demineur m){
+
+    public VueJeu(ModeleJeu m){
         this.modele = m ;
         this.setTitle("Démineur");
         this.setDefaultCloseOperation( EXIT_ON_CLOSE ) ;
@@ -112,7 +104,7 @@ public class FenetrePrincipaleVue extends JFrame implements Observer {
     }   
     
     public static void main( String[] args ) {
-        FenetrePrincipaleVue fpv = new FenetrePrincipaleVue(new Demineur());
+        VueJeu fpv = new VueJeu(new ModeleJeu());
         fpv.setVisible(true) ;
         fpv.setLocationRelativeTo(null);
     }   
