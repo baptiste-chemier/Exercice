@@ -38,11 +38,11 @@ public class Controleur{
             return; 
         
         if(!game.getGrille().getCases()[numcase].isDecouverte()){
-            if(!game.getGrille().getCases()[numcase].isFlag()){
+            if(!game.getGrille().getCases()[numcase].isFlag() && game.getGrille().getNbBombesRestantes() > 0){
                 game.getGrille().getCases()[numcase].setFlag(true);
                 game.getGrille().setNbBombesRestantes(game.getGrille().getNbBombesRestantes()-1);
             }
-            else{
+            else if (game.getGrille().getCases()[numcase].isFlag()){
                 game.getGrille().getCases()[numcase].setFlag(false); 
                 game.getGrille().setNbBombesRestantes(game.getGrille().getNbBombesRestantes()+1);    
             }

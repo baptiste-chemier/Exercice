@@ -15,6 +15,7 @@ import Controleur.Controleur;
 import Modele.ModeleJeu;
 import static Modele.ModeleJeu.etat.ENCOURS;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class VueJeu extends JFrame implements Observer {
     private final ModeleJeu modele ;
@@ -29,6 +30,8 @@ public class VueJeu extends JFrame implements Observer {
     private JMenuItem itemMoyen;
     private JMenuItem itemDifficile;
     private JMenuBar jMenuBar1;
+    private JPanel panelHUD;
+
 
     public VueJeu(ModeleJeu m){
         this.modele = m ;
@@ -38,6 +41,7 @@ public class VueJeu extends JFrame implements Observer {
         this.setResizable(false);
         initComponents();  
         modele.addObserver((Observer) this);
+        modele.addObserver((Observer) panelHUD); 
     }  
 
     private void initComponents(){
@@ -49,6 +53,8 @@ public class VueJeu extends JFrame implements Observer {
         gc.weighty = 2;
         gc.gridx = 0;
         gc.gridy = 0;
+        panelHUD = new VueHUD(modele);
+        this.add(panelHUD, gc); 
         jpGrille = new VueGrille(modele); 
         gc.fill = GridBagConstraints.NONE;
         gc.gridx = 0;
@@ -139,12 +145,16 @@ public class VueJeu extends JFrame implements Observer {
     public void update(Observable o, Object arg) {
         if(arg instanceof Boolean && (boolean)arg){
             this.remove(jpGrille);
+            this.remove(panelHUD);
+            panelHUD = new VueHUD(modele);  
             jpGrille = new VueGrille(modele);  
             modele.addObserver(this);
+            modele.addObserver((Observer)panelHUD);      
             gc.fill = GridBagConstraints.HORIZONTAL;
             gc.gridx = 0;
             gc.gridy = 0; 
             gc.insets = new Insets(0, 0, 0, 0);
+            this.add(panelHUD, gc); 
             gc.fill = GridBagConstraints.NONE;
             gc.gridx = 0;
             gc.gridy = 1;
@@ -152,7 +162,7 @@ public class VueJeu extends JFrame implements Observer {
             this.add(jpGrille, gc); 
             pack();      
         }
-    }   
+    }
     
     public static void main( String[] args ) {
         VueJeu fpv = new VueJeu(new ModeleJeu());
