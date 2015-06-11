@@ -18,7 +18,7 @@ public class ModeleGrille {
         this.nbBombesRestantes = nbBombes;
         this.derniereCase = -1;
         this.nbDecouvertes = 0;   
-        this.nbTotales = nbCases[0]*nbCases[1];
+        this.nbTotales = nbCases[0] * nbCases[1];
         this.cases = new ModeleCase[nbTotales];
         
         for(int id = 0 ; id < nbTotales; id++){
@@ -112,10 +112,10 @@ public class ModeleGrille {
         return this.getVoisins(courante).size();
     }
 
-    public ArrayList<ModeleCase> getVoisinsPieges(ModeleCase courante)
+    public ArrayList<ModeleCase> getVoisinsPieges(ModeleCase modeleCase)
     {
         ArrayList<ModeleCase> voisinsPieges = new ArrayList(); 
-        ArrayList<ModeleCase> caseVoisines = this.getVoisins(courante);
+        ArrayList<ModeleCase> caseVoisines = this.getVoisins(modeleCase);
         
         for(int i = 0; i < caseVoisines.size(); i++)
         {
@@ -126,9 +126,9 @@ public class ModeleGrille {
         return voisinsPieges;
     } 
  
-    public int getNbPieges(ModeleCase courante)
+    public int getNbPieges(ModeleCase modeleCase)
     {
-        return this.getVoisinsPieges(courante).size();
+        return this.getVoisinsPieges(modeleCase).size();
     }  
 
     public int[] getNbCases()

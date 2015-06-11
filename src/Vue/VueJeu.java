@@ -33,10 +33,9 @@ public class VueJeu extends JFrame implements Observer
     private JMenuBar jMenuBar1;
     private JPanel panelHUD;
 
-
-    public VueJeu(ModeleJeu m)
+    public VueJeu(ModeleJeu jeu)
     {
-        this.modele = m ;
+        this.modele = jeu ;
         this.setTitle("Démineur");
         this.setDefaultCloseOperation( EXIT_ON_CLOSE ) ;
         this.getContentPane().setBackground(new Color(255,255,255));

@@ -16,20 +16,29 @@ public class Controleur
     {
         if(stateParty())
             return;
-        
-        if(!game.getGrille().getCases()[idCase].isDecouverte() && !game.getGrille().getCases()[idCase].isFlag()){
+                
+        if(!game.getGrille().getCases()[idCase].isDecouverte() && !game.getGrille().getCases()[idCase].isFlag())
+        {
             game.getGrille().getCases()[idCase].setDecouverte(true);
-            if(!game.getGrille().isPremierCoup()){
+            if(!game.getGrille().isPremierCoup())
+            {
+                //game.getChrono().start();
                 game.getGrille().setBombes(game.getGrille().getNbBombes(), idCase);
             }
             game.getGrille().setDerniereCase(idCase);
             game.getGrille().propageVoisins(game.getGrille().getCases()[idCase]);
-            if(game.finPartie(idCase) == ModeleJeu.etat.Perdu){
+            
+            if(game.finPartie(idCase) == ModeleJeu.etat.Perdu)
+            {
                 game.setEtatPartie(ModeleJeu.etat.Perdu);
+                //game.getChrono().stop();
                 JOptionPane.showMessageDialog(null, "Vous avez perdu !") ;
             }
-            else if(game.finPartie(idCase) == ModeleJeu.etat.Gagner){
+            
+            else if(game.finPartie(idCase) == ModeleJeu.etat.Gagner)
+            {
                 game.setEtatPartie(ModeleJeu.etat.Gagner);           
+                //game.getChrono().stop();
                 JOptionPane.showMessageDialog(null, "Vous avez gagné !") ;
             }
         }
@@ -47,6 +56,7 @@ public class Controleur
                 game.getGrille().getCases()[idCase].setFlag(true);
                 game.getGrille().setNbBombesRestantes(game.getGrille().getNbBombesRestantes()-1);
             }
+            
             else if (game.getGrille().getCases()[idCase].isFlag())
             {
                 game.getGrille().getCases()[idCase].setFlag(false); 

@@ -9,17 +9,24 @@ public class ModeleJeu extends Observable implements Runnable {
     
     private ModeleGrille grille;
     private etat etatPartie;
+    private Chrono chrono;
 
     public ModeleJeu()
     {    
         this.iniComponent(new int[]{12, 10}, 10);
         new Thread(this).start();
     }  
-
+        
     public void iniComponent(int[] nbCases, int nbBombes)
     {
         this.grille = new ModeleGrille(nbCases, nbBombes) {};  
-        this.etatPartie = EnJeu;  
+        this.etatPartie = EnJeu; 
+        chrono = new Chrono();
+    }
+    
+    public Chrono getChrono()
+    {
+        return chrono;
     }
 
     public etat getEtatPartie()
