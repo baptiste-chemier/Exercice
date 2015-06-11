@@ -17,8 +17,6 @@ import javax.swing.SwingUtilities;
 import Controleur.Controleur;
 import Modele.ModeleJeu;
 import static Modele.ModeleJeu.etat.*;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import javax.swing.BorderFactory;
 
 public abstract class VueCase extends JPanel implements Observer{
@@ -64,9 +62,9 @@ public abstract class VueCase extends JPanel implements Observer{
     public void caseMouseClicked(MouseEvent e) {
         Controleur c = new Controleur(modele);
         if(SwingUtilities.isLeftMouseButton(e))
-            c.clickGauche(id);
+            c.leftClick(id);
         if(SwingUtilities.isRightMouseButton(e)) 
-            c.clickDroit(id);
+            c.rightClick(id);
     }
     
     @Override
@@ -76,7 +74,7 @@ public abstract class VueCase extends JPanel implements Observer{
                 if(modele.getGrille().getCases()[id].isPiege())
                     afficherBombe();
                 else if(id==modele.getGrille().getDerniereCase() || modele.getEtatPartie()==VICTOIRE)
-                    afficherNombre();
+                    afficherNbMinesVoisines();
                 else
                     effaceIcone(); 
             }
@@ -84,9 +82,9 @@ public abstract class VueCase extends JPanel implements Observer{
                 if(modele.getGrille().getCases()[id].isPiege()){
                     afficherBombe();
                 }else{
-                    afficherNombre();                
+                    afficherNbMinesVoisines();                
                 }          
-            }else if(id<modele.getGrille().getCases().length && modele.getGrille().getCases()[id].isDrapeau()){
+            }else if(id<modele.getGrille().getCases().length && modele.getGrille().getCases()[id].isFlag()){
                 afficheDrapeau();
             }
             else{
@@ -96,7 +94,7 @@ public abstract class VueCase extends JPanel implements Observer{
         }
     }  
 
-        public void afficherNombre(){
+        public void afficherNbMinesVoisines(){
         int nbVoisinsPieges = modele.getGrille().getNombreVoisinsPieges(modele.getGrille().getCases()[id]);
         label.setText(Integer.toString(nbVoisinsPieges));  
         label.setIcon(null);

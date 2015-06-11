@@ -3,12 +3,13 @@ package Modele;
 import java.util.ArrayList;
 
 public abstract class ModeleGrille {
-    protected int nbCases[];
+    protected int nbCases[]; //nbCases[0] = nb Lignes / nbCases[1] = nb Colonnes
     protected ModeleCase[] cases;
     protected int nbBombes;
     protected int nbBombesRestantes;
     protected int derniereCase;
     protected int nbCasesDecouvertes;
+    
     protected int nbCasesTotales;
     
     public ModeleGrille(int _nbCases[], int _nbBombes){
@@ -27,34 +28,36 @@ public abstract class ModeleGrille {
          
     public ArrayList<ModeleCase> getCasesVoisines(ModeleCase courante){
         ArrayList<ModeleCase> voisins = new ArrayList();
-        boolean bordgauche = false;
-        boolean borddroit = false;
-        boolean bordhaut = false; 
-        boolean bordbas = false;
+        boolean gauche = false;
+        boolean droite = false;
+        boolean haut = false; 
+        boolean bas = false;
         
         if(courante.getId()%this.getNbCases()[0]==0)
-            bordgauche = true;
+            gauche = true;
         if(courante.getId()%this.getNbCases()[0]==this.getNbCases()[0]-1)
-            borddroit = true;  
+            droite = true;  
         if(courante.getId()/this.getNbCases()[0]==0)
-            bordhaut = true;
+            haut = true;
         if(courante.getId()/this.getNbCases()[0]==this.getNbCases()[1]-1)
-            bordbas = true;      
-        if(!bordgauche)
+            bas = true; 
+        
+        
+        if(!gauche)
             voisins.add(this.getCases()[courante.getId() - 1]);
-        if(!borddroit)
+        if(!droite)
             voisins.add(this.getCases()[courante.getId() + 1]);  
-        if(!bordhaut)
+        if(!haut)
             voisins.add(this.getCases()[courante.getId() - this.getNbCases()[0]]);     
-        if(!bordbas)
+        if(!bas)
             voisins.add(this.getCases()[courante.getId() + this.getNbCases()[0]]);
-        if(!bordhaut && !bordgauche)
+        if(!haut && !gauche)
             voisins.add(this.getCases()[courante.getId() - 1 - this.getNbCases()[0]]);
-        if(!bordhaut && !borddroit)
+        if(!haut && !droite)
             voisins.add(this.getCases()[courante.getId() + 1 - this.getNbCases()[0]]);
-        if(!bordbas && !bordgauche)
+        if(!bas && !gauche)
             voisins.add(this.getCases()[courante.getId() - 1 + this.getNbCases()[0]]);     
-        if(!bordbas && !borddroit)
+        if(!bas && !droite)
             voisins.add(this.getCases()[courante.getId() + 1 + this.getNbCases()[0]]);
         return voisins;
     }

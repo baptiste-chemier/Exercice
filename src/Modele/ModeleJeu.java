@@ -17,7 +17,7 @@ public final class ModeleJeu extends Observable implements Runnable {
     public ModeleJeu(){
         casePressed = false;      
         this.initPartie(new int[]{12,10}, 20);
-        demarreThread();
+        demarrerJeu();
     }  
 
     public void initPartie(int[] _nbCases, int _nbBombes){
@@ -81,7 +81,7 @@ public final class ModeleJeu extends Observable implements Runnable {
         }
     }
      
-    private void demarreThread() {
+    private void demarrerJeu() {
         new Thread(this).start();
     }
 }

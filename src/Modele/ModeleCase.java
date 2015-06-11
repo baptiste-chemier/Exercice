@@ -3,13 +3,13 @@ package Modele;
 public class ModeleCase {
     private boolean piege;
     private boolean decouverte;
-    private boolean drapeau;
+    private boolean flag;
     private final int id;
     
     public ModeleCase(boolean _piege, int _id){
         piege = _piege;
         decouverte = false;
-        drapeau = false;
+        flag = false;
         id = _id;
     }
 
@@ -29,12 +29,12 @@ public class ModeleCase {
         this.decouverte = decouverte;
     }
 
-    public boolean isDrapeau() {
-        return drapeau;
+    public boolean isFlag() {
+        return flag;
     }
 
-    public void setDrapeau(boolean drapeau) {
-        this.drapeau = drapeau;
+    public void setFlag(boolean drapeau) {
+        this.flag = drapeau;
     }
 
     public int getId() {

@@ -73,7 +73,7 @@ public class VueJeu extends JFrame implements Observer {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {                                       
         Controleur c = new Controleur(modele);
-        c.nouvellePartie(modele.getGrille().getNbCases(), modele.getGrille().getNbBombes());
+        c.newParty(modele.getGrille().getNbCases(), modele.getGrille().getNbBombes());
     }   
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) { 
