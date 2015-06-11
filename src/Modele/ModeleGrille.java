@@ -27,7 +27,11 @@ public abstract class ModeleGrille {
          
     public ArrayList<ModeleCase> getCasesVoisines(ModeleCase courante){
         ArrayList<ModeleCase> voisins = new ArrayList();
-        boolean bordgauche = false, borddroit = false, bordhaut = false, bordbas = false;
+        boolean bordgauche = false;
+        boolean borddroit = false;
+        boolean bordhaut = false; 
+        boolean bordbas = false;
+        
         if(courante.getId()%this.getNbCases()[0]==0)
             bordgauche = true;
         if(courante.getId()%this.getNbCases()[0]==this.getNbCases()[0]-1)
@@ -51,7 +55,7 @@ public abstract class ModeleGrille {
         if(!bordbas && !bordgauche)
             voisins.add(this.getCases()[courante.getId() - 1 + this.getNbCases()[0]]);     
         if(!bordbas && !borddroit)
-            voisins.add(this.getCases()[courante.getId() + 1 + this.getNbCases()[0]]); 
+            voisins.add(this.getCases()[courante.getId() + 1 + this.getNbCases()[0]]);
         return voisins;
     }
     

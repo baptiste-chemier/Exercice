@@ -17,6 +17,9 @@ import javax.swing.SwingUtilities;
 import Controleur.Controleur;
 import Modele.ModeleJeu;
 import static Modele.ModeleJeu.etat.*;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import javax.swing.BorderFactory;
 
 public abstract class VueCase extends JPanel implements Observer{
     ModeleJeu modele;
@@ -45,47 +48,26 @@ public abstract class VueCase extends JPanel implements Observer{
             public void mouseEntered(MouseEvent evt) {
                 caseMouseEntered(evt);
             }
-            @Override
-            public void mousePressed(MouseEvent e) {
-                caseMousePressed(e);
-            }
            
-           @Override
+            @Override
             public void mouseReleased(MouseEvent e) {
                 if(entered)
                     caseMouseClicked(e);
-                caseMouseReleased(e);
             }
         });
+        
+        this.add(label);     
+        this.setBackground(color);     
+        this.setBorder(BorderFactory.createRaisedBevelBorder());   
     }
-    
-    public abstract void caseMouseExited(MouseEvent e);
-    public abstract void caseMouseEntered(MouseEvent e);
     
     public void caseMouseClicked(MouseEvent e) {
         Controleur c = new Controleur(modele);
         if(SwingUtilities.isLeftMouseButton(e))
-            c.controleCaseClickedLeft(id);
+            c.clickGauche(id);
         if(SwingUtilities.isRightMouseButton(e)) 
-            c.controleCaseClickedRight(id);
+            c.clickDroit(id);
     }
-    
-    public void caseMousePressed(MouseEvent e) {
-        if(SwingUtilities.isLeftMouseButton(e)){
-            Controleur c = new Controleur(modele);
-            c.casePressed(id);
-        }
-    }
-
-    public void caseMouseReleased(MouseEvent e) {
-        Controleur c = new Controleur(modele);
-        c.caseReleased();
-    }
-    
-    public abstract void afficherNombre(); 
-    public abstract void afficherBombe();
-    public abstract void afficheDrapeau();
-    public abstract void effaceIcone();
     
     @Override
     public void update(Observable o, Object arg) {
@@ -113,4 +95,64 @@ public abstract class VueCase extends JPanel implements Observer{
             repaint();
         }
     }  
+
+        public void afficherNombre(){
+        int nbVoisinsPieges = modele.getGrille().getNombreVoisinsPieges(modele.getGrille().getCases()[id]);
+        label.setText(Integer.toString(nbVoisinsPieges));  
+        label.setIcon(null);
+        this.setBorder(BorderFactory.createLoweredBevelBorder());
+        this.setBackground(new Color(206,206,206));
+                
+        switch(nbVoisinsPieges){
+            case 0 : label.setText("");
+                break;
+            case 1: label.setForeground(Color.blue);
+                break;
+            case 2: label.setForeground(Color.green);
+                break;
+            case 3: label.setForeground(Color.red);
+                break;
+            case 4: label.setForeground(Color.orange);
+                break;  
+            case 5: label.setForeground(Color.cyan);
+                break;
+            case 6: label.setForeground(Color.pink);
+                break;
+            case 7: label.setForeground(Color.magenta);
+                break;
+            case 8: label.setForeground(Color.black);
+                break;  
+            default: label.setForeground(Color.black);
+                break;            
+        }
+    }
+    
+    public void afficherBombe(){
+        if(id==modele.getGrille().getDerniereCase()){
+            this.setBackground(Color.red);
+        }else
+            this.setBackground(Color.pink);
+        this.setBorder(BorderFactory.createLoweredBevelBorder());
+        label.setIcon(icones[0]);
+    }
+    
+    public void afficheDrapeau(){
+        label.setIcon(icones[1]);
+    }
+    
+    public void effaceIcone(){
+        label.setIcon(null);
+    }
+
+    public void caseMouseExited(MouseEvent e) {
+        entered = false;
+        if(!modele.getGrille().getCases()[id].isDecouverte() && modele.getEtatPartie()==ENCOURS)
+            this.setBackground(couleur);
+    }
+
+    public void caseMouseEntered(MouseEvent e) {
+        entered = true;
+        if(!modele.getGrille().getCases()[id].isDecouverte() && modele.getEtatPartie()==ENCOURS)
+            this.setBackground(new Color(206,206,206));
+    }
 }

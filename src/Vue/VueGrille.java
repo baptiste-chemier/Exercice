@@ -6,7 +6,7 @@ import javax.swing.*;
 import Modele.ModeleJeu;
 import java.awt.Image;
 
-public class VueGrille extends JPanel{
+public final class VueGrille extends JPanel{
     int nbcasesX;
     int nbcasesY;
     protected ModeleJeu modele;
@@ -28,19 +28,10 @@ public class VueGrille extends JPanel{
         nbcasesY = modele.getGrille().getNbCases()[1];
 	this.setLayout(new GridLayout(nbcasesY, nbcasesX)) ;    
         
-        VueAction cases;
+        VueCase cases;
         for (int i=0; i<nbcasesY*nbcasesX; i++) {
-            int r = 190-(i/nbcasesX+i%nbcasesX)*3;
-            int g = 244-(i/nbcasesX+i%nbcasesX);
-            int b = 255;
-            if(r<0)
-                r=0;
-            if(g<0)
-                g=0;
-            if(b<0)
-                b=0;
-            Color c = new Color(r,g,b);
-            cases = new VueAction(modele, i, taillecase, icones,c);
+            Color c = new Color(255, 255, 255);
+            cases = new VueCase(modele, i, taillecase, icones,c) {};
             this.add(cases);
             modele.addObserver(cases);     
         }

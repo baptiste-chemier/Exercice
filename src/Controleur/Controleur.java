@@ -1,7 +1,6 @@
 package Controleur;
 
 import Modele.ModeleJeu;
-import Modele.ModeleJeu.etat;
 
 public class Controleur{
     private final ModeleJeu demineur;
@@ -9,13 +8,9 @@ public class Controleur{
     public Controleur(ModeleJeu d){
         this.demineur = d;
     }  
-        
-    public boolean controlePartieTerminnee(){
-        return demineur.getEtatPartie()!=ModeleJeu.etat.ENCOURS;
-    }
     
-    public void controleCaseClickedLeft(int numcase){
-        if(controlePartieTerminnee())
+    public void clickGauche(int numcase){
+        if(etatPartie())
             return;
         
         if(!demineur.getGrille().getCases()[numcase].isDecouverte() && !demineur.getGrille().getCases()[numcase].isDrapeau()){
@@ -35,8 +30,8 @@ public class Controleur{
         }
     }
 
-    public void controleCaseClickedRight(int numcase){
-        if(controlePartieTerminnee())
+    public void clickDroit(int numcase){
+        if(etatPartie())
             return; 
         
         if(!demineur.getGrille().getCases()[numcase].isDecouverte()){
@@ -52,22 +47,12 @@ public class Controleur{
         }
     }  
 
-    public void controleNouvellePartie(int[] cases, int bombes){    
+    public void nouvellePartie(int[] cases, int bombes){    
         demineur.initPartie(cases, bombes);
         demineur.setEnvoieNotifReset(true);          
     }  
- 
-    public void casePressed(int id){
-        if(!demineur.getGrille().getCases()[id].isDecouverte() && demineur.getEtatPartie() == etat.ENCOURS){
-            demineur.casePressed = true;
-            demineur.setEnvoieNotif(true);
-        }
-    }
     
-    public void caseReleased(){
-        if(demineur.getEtatPartie() == etat.ENCOURS){
-            demineur.casePressed = false;
-            demineur.setEnvoieNotif(true);
-        }
+    public boolean etatPartie(){
+        return demineur.getEtatPartie()!=ModeleJeu.etat.ENCOURS;
     }
 }

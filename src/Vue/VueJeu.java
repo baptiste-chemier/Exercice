@@ -16,7 +16,6 @@ import Controleur.Controleur;
 import Modele.ModeleJeu;
 
 public class VueJeu extends JFrame implements Observer {
-    private JTextField jt ;
     private final ModeleJeu modele ;
     private VueGrille jpGrille;
     private GridBagLayout layout;
@@ -30,7 +29,7 @@ public class VueJeu extends JFrame implements Observer {
         this.modele = m ;
         this.setTitle("Démineur");
         this.setDefaultCloseOperation( EXIT_ON_CLOSE ) ;
-        this.getContentPane().setBackground(new Color(220,250,255));
+        this.getContentPane().setBackground(new Color(255,255,255));
         this.setResizable(false);
         initComponents();  
         modele.addObserver((Observer) this);
@@ -74,7 +73,7 @@ public class VueJeu extends JFrame implements Observer {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {                                       
         Controleur c = new Controleur(modele);
-        c.controleNouvellePartie(modele.getGrille().getNbCases(), modele.getGrille().getNbBombes());
+        c.nouvellePartie(modele.getGrille().getNbCases(), modele.getGrille().getNbBombes());
     }   
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) { 
