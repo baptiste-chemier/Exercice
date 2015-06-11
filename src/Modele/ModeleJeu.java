@@ -1,88 +1,64 @@
 package Modele;
 
 import java.util.Observable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import static Modele.ModeleJeu.etat.*;
 
-public final class ModeleJeu extends Observable implements Runnable {
+public class ModeleJeu extends Observable implements Runnable {
 
-    public enum etat {VICTOIRE, DEFAITE, ENCOURS; }
+    public enum etat {Gagner, Perdu, EnJeu; }
     
     private ModeleGrille grille;
-    private boolean envoieNotif, envoieNotifReset;   
     private etat etatPartie;
-    public boolean casePressed;
 
-    public ModeleJeu(){
-        casePressed = false;      
-        this.initPartie(new int[]{12,10}, 10);
-        demarrerJeu();
+    public ModeleJeu()
+    {    
+        this.iniComponent(new int[]{12, 10}, 10);
+        new Thread(this).start();
     }  
 
-    public void initPartie(int[] _nbCases, int _nbBombes){
-        grille = new ModeleGrille(_nbCases, _nbBombes) {};  
-        envoieNotif = false;
-        envoieNotifReset = false;
-        etatPartie = ENCOURS;  
+    public void iniComponent(int[] nbCases, int nbBombes)
+    {
+        this.grille = new ModeleGrille(nbCases, nbBombes) {};  
+        this.etatPartie = EnJeu;  
     }
 
-    public etat getEtatPartie() {
+    public etat getEtatPartie()
+    {
         return etatPartie;
     }
 
-    public void setEtatPartie(etat etatPartie) {
+    public void setEtatPartie(etat etatPartie) 
+    {
         this.etatPartie = etatPartie;
     }
 
-    public ModeleGrille getGrille() {
+    public ModeleGrille getGrille() 
+    {
         return grille;
     }
-
-    public void setEnvoieNotif(boolean envoieNotif) {
-        this.envoieNotif = envoieNotif;
-    }
-
-    public void setEnvoieNotifReset(boolean envoieNotifReset) {
-        this.envoieNotifReset = envoieNotifReset;
-    }
     
-    public void notifierObservateurs(boolean reset){
+    public void notifierObservateurs(boolean reset)
+    {
         setChanged();
         notifyObservers((boolean)reset);
     }
 
-    public etat testPartieTerminee(int IDderniereCaseDecouverte){
-        if(this.getGrille().getCases()[IDderniereCaseDecouverte].isPiege())
-            return DEFAITE;  
-        if(this.getGrille().getNbCasesDecouvertes()+this.getGrille().getNbBombes()>=this.getGrille().getCases().length){
-            return VICTOIRE;
+    public etat finPartie(int idCase)
+    {
+        if(this.getGrille().getCases()[idCase].isPiege())
+            return Perdu;  
+        if(this.getGrille().getNbDecouvertes() + this.getGrille().getNbBombes() >= this.getGrille().getCases().length){
+            return Gagner;
         }
-        return ENCOURS;
+        return EnJeu;
     }
     
     @Override
-    public void run() {
+    public void run() 
+    {
         while(true){
-            try {
-                Thread.sleep(1);           
-                if(this.envoieNotif){
-                    setEnvoieNotif(false);
-                    notifierObservateurs(false);
-                }
-                else if(this.envoieNotifReset){
-                    setEnvoieNotifReset(false);
-                    notifierObservateurs(true);            
-                }
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ModeleJeu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
+            notifierObservateurs(false);
         }
-    }
-     
-    private void demarrerJeu() {
-        new Thread(this).start();
     }
 }
 

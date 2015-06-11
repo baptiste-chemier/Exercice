@@ -13,11 +13,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import Controleur.Controleur;
 import Modele.ModeleJeu;
-import static Modele.ModeleJeu.etat.ENCOURS;
+import static Modele.ModeleJeu.etat.*;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class VueJeu extends JFrame implements Observer {
+public class VueJeu extends JFrame implements Observer 
+{
     private final ModeleJeu modele ;
     private VueGrille jpGrille;
     private GridBagLayout layout;
@@ -33,7 +34,8 @@ public class VueJeu extends JFrame implements Observer {
     private JPanel panelHUD;
 
 
-    public VueJeu(ModeleJeu m){
+    public VueJeu(ModeleJeu m)
+    {
         this.modele = m ;
         this.setTitle("Démineur");
         this.setDefaultCloseOperation( EXIT_ON_CLOSE ) ;
@@ -44,7 +46,8 @@ public class VueJeu extends JFrame implements Observer {
         modele.addObserver((Observer) panelHUD); 
     }  
 
-    private void initComponents(){
+    private void initComponents()
+    {
         layout = new GridBagLayout();
         gc = new GridBagConstraints();
         this.setLayout(layout);
@@ -102,17 +105,20 @@ public class VueJeu extends JFrame implements Observer {
         pack();     
     }                                
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {                                       
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt)
+    {                                       
         Controleur c = new Controleur(modele);
         c.newParty(modele.getGrille().getNbCases(), modele.getGrille().getNbBombes());
     }      
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {                                       
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt)
+    {                                       
         System.exit(1);
     }  
     
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {                                       
-        if(modele.getEtatPartie()!=ENCOURS)
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt)
+    {                                       
+        if(modele.getEtatPartie()!=EnJeu)
         {
            Controleur c = new Controleur(modele);
             c.newParty(modele.getGrille().getNbCases(), 10);         
@@ -121,8 +127,9 @@ public class VueJeu extends JFrame implements Observer {
             JOptionPane.showMessageDialog(null, "Veuillez terminer la partie avant") ;
     }  
         
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {                                       
-        if(modele.getEtatPartie()!=ENCOURS)
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt)
+    {                                       
+        if(modele.getEtatPartie()!=EnJeu)
         {
            Controleur c = new Controleur(modele);
             c.newParty(modele.getGrille().getNbCases(), 20);         
@@ -131,8 +138,9 @@ public class VueJeu extends JFrame implements Observer {
             JOptionPane.showMessageDialog(null, "Veuillez terminer la partie avant") ;
     }  
             
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {                                       
-        if(modele.getEtatPartie()!=ENCOURS)
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) 
+    {                                       
+        if(modele.getEtatPartie()!=EnJeu)
         {
            Controleur c = new Controleur(modele);
             c.newParty(modele.getGrille().getNbCases(), 30);         
@@ -142,8 +150,10 @@ public class VueJeu extends JFrame implements Observer {
     }  
 
     @Override
-    public void update(Observable o, Object arg) {
-        if(arg instanceof Boolean && (boolean)arg){
+    public void update(Observable o, Object arg) 
+    {
+        if(arg instanceof Boolean && (boolean)arg)
+        {
             this.remove(jpGrille);
             this.remove(panelHUD);
             panelHUD = new VueHUD(modele);  
@@ -164,7 +174,8 @@ public class VueJeu extends JFrame implements Observer {
         }
     }
     
-    public static void main( String[] args ) {
+    public static void main( String[] args )
+    {
         VueJeu fpv = new VueJeu(new ModeleJeu());
         fpv.setVisible(true) ;
         fpv.setLocationRelativeTo(null);

@@ -19,134 +19,138 @@ import Modele.ModeleJeu;
 import static Modele.ModeleJeu.etat.*;
 import javax.swing.BorderFactory;
 
-public abstract class VueCase extends JPanel implements Observer{
-    ModeleJeu modele;
-    int id;
-    JLabel label;
-    ImageIcon[] icones;
-    int taille;
-    Color couleur;
-    protected boolean entered;
+public class VueCase extends JPanel implements Observer
+{
+    private ModeleJeu modele;
+    private int id;
+    private JLabel label;
+    private ImageIcon[] icones;
+    private int taille;
+    private Color couleur;
+    private boolean entered;
 
-    public VueCase(ModeleJeu m, int i, int taillecase, ImageIcon[] listeicones, Color color){
-        modele = m;
-        id = i;
-        icones = listeicones;
-        taille = taillecase;
-        label = new JLabel();
-        couleur = color;
-        this.setPreferredSize(new Dimension(taillecase,taillecase));     
-        entered = false;
-        this.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseExited(MouseEvent evt) {
-                caseMouseExited(evt);
-            }
-            @Override
-            public void mouseEntered(MouseEvent evt) {
-                caseMouseEntered(evt);
-            }
-           
+    public VueCase(ModeleJeu m, int i, ImageIcon[] icones)
+    {
+        this.modele = m;
+        this.id = i;
+        this.icones = icones;
+        this.taille = 30;
+        this.label = new JLabel();
+        this.couleur = new Color(255, 255, 255);
+        this.setPreferredSize(new Dimension(taille, taille));     
+        this.entered = false;
+        this.addMouseListener(new java.awt.event.MouseAdapter() {         
             @Override
             public void mouseReleased(MouseEvent e) {
-                if(entered)
-                    caseMouseClicked(e);
+                caseMouseClicked(e);
             }
         });
         
         this.add(label);     
-        this.setBackground(color);     
+        this.setBackground(couleur);     
         this.setBorder(BorderFactory.createRaisedBevelBorder());   
     }
     
-        @Override
-    public void update(Observable o, Object arg) {
+    @Override
+    public void update(Observable o, Object arg)
+    {
         if(arg instanceof Boolean && !(boolean)arg){
-            if(modele.getEtatPartie()==DEFAITE || modele.getEtatPartie()==VICTOIRE){
+            if(modele.getEtatPartie() == Perdu || modele.getEtatPartie() == Gagner)
+            {
                 if(modele.getGrille().getCases()[id].isPiege())
                     afficherBombe();
-                else if(id==modele.getGrille().getDerniereCase() || modele.getEtatPartie()==VICTOIRE)
-                    afficherNbMinesVoisines();
+                else if(id == modele.getGrille().getDerniereCase() || modele.getEtatPartie() == Gagner)
+                    afficherNbPieges();
                 else
                     effaceIcone(); 
             }
-            else if(id<modele.getGrille().getCases().length && modele.getGrille().getCases()[id].isDecouverte()){
-                if(modele.getGrille().getCases()[id].isPiege()){
+            else if(id < modele.getGrille().getCases().length && modele.getGrille().getCases()[id].isDecouverte())
+            {
+                if(modele.getGrille().getCases()[id].isPiege())
                     afficherBombe();
-                }else{
-                    afficherNbMinesVoisines();                
-                }          
-            }else if(id<modele.getGrille().getCases().length && modele.getGrille().getCases()[id].isFlag()){
-                afficheDrapeau();
+                else
+                    afficherNbPieges();                
+                          
             }
-            else{
+            else if(id<modele.getGrille().getCases().length && modele.getGrille().getCases()[id].isFlag())
+                afficherDrapeau();
+            else
                 effaceIcone();
-            }  
+            
             repaint();
         }
     }  
     
-    public void afficherBombe(){
-        this.setBorder(BorderFactory.createLoweredBevelBorder());
+    public void afficherBombe()
+    {
         label.setIcon(icones[0]);
-        if(id==modele.getGrille().getDerniereCase()){
+        if(id == modele.getGrille().getDerniereCase()){
             this.setBackground(Color.white);
             label.setIcon(icones[2]);
         }
     }
     
-    public void afficheDrapeau(){
+    public void afficherDrapeau()
+    {
         label.setIcon(icones[1]);
     }
    
-    public void afficherNbMinesVoisines(){
-        int nbVoisinsPieges = modele.getGrille().getNombreVoisinsPieges(modele.getGrille().getCases()[id]);
-        label.setText(Integer.toString(nbVoisinsPieges));  
+    public void afficherNbPieges()
+    {
+        int nbPieges = modele.getGrille().getNbPieges(modele.getGrille().getCases()[id]);
+        label.setText(Integer.toString(nbPieges));  
         label.setIcon(null);
-        this.setBorder(BorderFactory.createLoweredBevelBorder());
         this.setBackground(new Color(206,206,206));
                 
-        switch(nbVoisinsPieges){
-            case 0 : label.setText("");
-                break;
-            case 1: label.setForeground(Color.blue);
-                break;
-            case 2: label.setForeground(Color.green);
-                break;
-            case 3: label.setForeground(Color.red);
-                break;
-            case 4: label.setForeground(Color.orange);
-                break;  
-            case 5: label.setForeground(Color.cyan);
-                break;
-            case 6: label.setForeground(Color.pink);
-                break;
-            case 7: label.setForeground(Color.magenta);
-                break;
-            case 8: label.setForeground(Color.black);
-                break;  
-            default: label.setForeground(Color.black);
-                break;            
+        if(nbPieges == 0)
+        {
+            label.setText("");
         }
+        else if(nbPieges == 1)
+        {
+            label.setForeground(Color.blue);
+        }
+        else if(nbPieges == 2)
+        {
+            label.setForeground(Color.green);
+        }
+        else if(nbPieges == 3)
+        {
+            label.setForeground(Color.red);
+        }       
+        else if(nbPieges == 4)
+        {
+            label.setForeground(Color.orange);
+        }
+        else if(nbPieges == 5)
+        {
+            label.setForeground(Color.cyan);
+        }
+        else if(nbPieges == 6)
+        {
+            label.setForeground(Color.pink);
+        }
+        else if(nbPieges == 7)
+        {
+            label.setForeground(Color.magenta);
+        }
+        else if(nbPieges == 8)
+        {
+            label.setForeground(Color.black);
+        }
+        else
+        {
+            label.setForeground(Color.black);
+        }      
     }
     
-    public void effaceIcone(){
+    public void effaceIcone()
+    {
         label.setIcon(null);
     }
-
-    public void caseMouseExited(MouseEvent e) {
-        entered = false;
-        if(!modele.getGrille().getCases()[id].isDecouverte() && modele.getEtatPartie()==ENCOURS)
-            this.setBackground(couleur);
-    }
-
-    public void caseMouseEntered(MouseEvent e) {
-        entered = true;
-        if(!modele.getGrille().getCases()[id].isDecouverte() && modele.getEtatPartie()==ENCOURS)
-            this.setBackground(new Color(206,206,206));
-    }
     
-    public void caseMouseClicked(MouseEvent e) {
+    public void caseMouseClicked(MouseEvent e)
+    {
         Controleur c = new Controleur(modele);
         if(SwingUtilities.isLeftMouseButton(e))
             c.leftClick(id);

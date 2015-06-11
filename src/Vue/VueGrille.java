@@ -6,68 +6,65 @@ import javax.swing.*;
 import Modele.ModeleJeu;
 import java.awt.Image;
 
-public final class VueGrille extends JPanel{
-    int nbcasesX;
-    int nbcasesY;
+public class VueGrille extends JPanel
+{
+    int nbCasesX;
+    int nbCasesY;
     protected ModeleJeu modele;
     protected ImageIcon[] icones;
+    private int taille;
     
-    public VueGrille(ModeleJeu m){
+    public VueGrille(ModeleJeu m)
+    {
         modele = m;
-        icones = new ImageIcon[2]; 
+        icones = new ImageIcon[3]; 
         modele.deleteObservers();
-         
-        initLayoutCases();
+        initComponent();
     }
   
-    protected void initLayoutCases() {
-        this.setBorder(BorderFactory.createLoweredBevelBorder());
-        int taillecase = 30;
-        icones = new ImageIcon[3];
-        icones[0] = imgBombe(taillecase);
-        icones[1] = imgDrapeau(taillecase);
-        icones[2] = imgExplosion(taillecase);
-        nbcasesX = modele.getGrille().getNbCases()[0];
-        nbcasesY = modele.getGrille().getNbCases()[1];
-	this.setLayout(new GridLayout(nbcasesY, nbcasesX)) ;    
-        
+    private void initComponent()
+    {
+        taille = 30;
+        icones[0] = imgBombe();
+        icones[1] = imgDrapeau();
+        icones[2] = imgExplosion();
+        nbCasesX = modele.getGrille().getNbCases()[0];
+        nbCasesY = modele.getGrille().getNbCases()[1];
+	this.setLayout(new GridLayout(nbCasesY, nbCasesX)) ;    
         VueCase cases;
-        for (int i=0; i<nbcasesY*nbcasesX; i++) {
-            Color c = new Color(255, 255, 255);
-            cases = new VueCase(modele, i, taillecase, icones, c) {};
+        
+        for (int i = 0; i < nbCasesY * nbCasesX; i++) 
+        {
+            cases = new VueCase(modele, i, icones) {};
             this.add(cases);
             modele.addObserver(cases);     
         }
     }
     
-    protected ImageIcon imgBombe(int taillecase)
+    private ImageIcon imgBombe()
     {
         ImageIcon icon = new ImageIcon(getClass().getResource("../img/bombe.png"));           	
         Image image = icon.getImage();
-        int taille = taillecase/3*2;
-        Image newimg = image.getScaledInstance(taille, taille, java.awt.Image.SCALE_SMOOTH); 
+        Image newimg = image.getScaledInstance(taille / 3 * 2, taille / 3 * 2, java.awt.Image.SCALE_SMOOTH); 
         icon = new ImageIcon(newimg); 
-        
         return icon;    
     }
     
-        protected ImageIcon imgExplosion(int taillecase)
+    private ImageIcon imgExplosion()
     {
         ImageIcon icon = new ImageIcon(getClass().getResource("../img/explosion.png"));           	
         Image image = icon.getImage();
-        int taille = taillecase/3*2;
-        Image newimg = image.getScaledInstance(taille, taille, java.awt.Image.SCALE_SMOOTH); 
+        Image newimg = image.getScaledInstance(taille / 3 * 2, taille / 3 * 2, java.awt.Image.SCALE_SMOOTH); 
         icon = new ImageIcon(newimg); 
-        
         return icon;    
     }
         
-    protected ImageIcon imgDrapeau(int taillecase){
+    private ImageIcon imgDrapeau()
+    {
         ImageIcon icon = new ImageIcon(getClass().getResource("/img/flag.png"));           	
-        Image image = icon.getImage();  
-        int taille = taillecase/3*2;
-        Image newimg = image.getScaledInstance(taille, taille, java.awt.Image.SCALE_SMOOTH); 
-        icon = new ImageIcon(newimg);         
+        Image image = icon.getImage();
+        Image newimg = image.getScaledInstance(taille / 3 * 2, taille / 3 * 2, java.awt.Image.SCALE_SMOOTH); 
+        icon = new ImageIcon(newimg);        
         return icon;
     }
 }
