@@ -11,7 +11,7 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import Controleur.Controleur;
+import Controleur.Demineur;
 import Modele.ModeleJeu;
 import static Modele.ModeleJeu.etat.*;
 import javax.swing.JOptionPane;
@@ -106,7 +106,7 @@ public class VueJeu extends JFrame implements Observer
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt)
     {                                       
-        Controleur c = new Controleur(modele);
+        Demineur c = new Demineur(modele);
         c.newParty(modele.getGrille().getNbCases(), modele.getGrille().getNbBombes());
     }      
 
@@ -119,8 +119,8 @@ public class VueJeu extends JFrame implements Observer
     {                                       
         if(modele.getEtatPartie()!=EnJeu)
         {
-           Controleur c = new Controleur(modele);
-            c.newParty(modele.getGrille().getNbCases(), 10);         
+           Demineur c = new Demineur(modele);
+            c.newParty(new int[]{8, 8}, 10);         
         }
         else
             JOptionPane.showMessageDialog(null, "Veuillez terminer la partie avant") ;
@@ -130,8 +130,8 @@ public class VueJeu extends JFrame implements Observer
     {                                       
         if(modele.getEtatPartie()!=EnJeu)
         {
-           Controleur c = new Controleur(modele);
-            c.newParty(modele.getGrille().getNbCases(), 20);         
+           Demineur c = new Demineur(modele);
+            c.newParty(new int[]{16, 16}, 40);         
         }
         else
             JOptionPane.showMessageDialog(null, "Veuillez terminer la partie avant") ;
@@ -141,8 +141,8 @@ public class VueJeu extends JFrame implements Observer
     {                                       
         if(modele.getEtatPartie()!=EnJeu)
         {
-           Controleur c = new Controleur(modele);
-            c.newParty(modele.getGrille().getNbCases(), 30);         
+           Demineur c = new Demineur(modele);
+            c.newParty(new int[]{30, 16}, 80);         
         }        
         else
             JOptionPane.showMessageDialog(null, "Veuillez terminer la partie avant") ;

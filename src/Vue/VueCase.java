@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import Controleur.Controleur;
+import Controleur.Demineur;
 import Modele.ModeleJeu;
 import static Modele.ModeleJeu.etat.*;
 import javax.swing.BorderFactory;
@@ -62,7 +62,7 @@ public class VueCase extends JPanel implements Observer
                 else if(id == modele.getGrille().getDerniereCase() || modele.getEtatPartie() == Gagner)
                     afficherNbPieges();
                 else
-                    effaceIcone(); 
+                    dropFlag(); 
             }
             else if(id < modele.getGrille().getCases().length && modele.getGrille().getCases()[id].isDecouverte())
             {
@@ -75,7 +75,7 @@ public class VueCase extends JPanel implements Observer
             else if(id<modele.getGrille().getCases().length && modele.getGrille().getCases()[id].isFlag())
                 afficherDrapeau();
             else
-                effaceIcone();
+                dropFlag();
             
             repaint();
         }
@@ -144,14 +144,14 @@ public class VueCase extends JPanel implements Observer
         }      
     }
     
-    public void effaceIcone()
+    public void dropFlag()
     {
         label.setIcon(null);
     }
     
     public void caseMouseClicked(MouseEvent e)
     {
-        Controleur c = new Controleur(modele);
+        Demineur c = new Demineur(modele);
         if(SwingUtilities.isLeftMouseButton(e))
             c.leftClick(id);
         if(SwingUtilities.isRightMouseButton(e)) 

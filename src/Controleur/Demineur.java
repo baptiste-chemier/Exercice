@@ -3,11 +3,11 @@ package Controleur;
 import Modele.ModeleJeu;
 import javax.swing.JOptionPane;
 
-public class Controleur
+public class Demineur
 {
     private final ModeleJeu game;
     
-    public Controleur(ModeleJeu d)
+    public Demineur(ModeleJeu d)
     {
         this.game = d;
     }  

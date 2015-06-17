@@ -15,7 +15,7 @@ public class VueHUD extends JPanel implements Observer
     private JLabel bombesRestantes;
     private JPanel panelBombes;
     private JLabel labelBombes;
-    private JLabel labelChrono;
+    //private JLabel labelChrono;
     private final ModeleJeu modele;
 
     public VueHUD(ModeleJeu m)
@@ -32,7 +32,7 @@ public class VueHUD extends JPanel implements Observer
         ImageIcon icon = new ImageIcon(getClass().getResource("/img/bombe2.png"));           	
         Image image = icon.getImage(); 
         bombesRestantes = new JLabel();
-        labelChrono = new JLabel();
+        //labelChrono = new JLabel();
         bombesRestantes.setPreferredSize(new Dimension(40,40));
         bombesRestantes.setText(" : " + modele.getGrille().getNbBombesRestantes() + "");       
         labelBombes = new JLabel(new ImageIcon(image));        
