@@ -1,5 +1,9 @@
 package Modele;
 
+/**
+ * Modele de la Case 
+ * @author Chemier Baptiste et Nguyen Aisi
+ */
 public class ModeleCase 
 {
     private boolean piege;

@@ -3,6 +3,10 @@ package Controleur;
 import Modele.ModeleJeu;
 import javax.swing.JOptionPane;
 
+/**
+ * Classe servant à gérer le jeu du démineur
+ * @author Chemier Baptiste et Nguyen Aisi
+ */
 public class Demineur
 {
     private final ModeleJeu game;
@@ -12,6 +16,10 @@ public class Demineur
         this.game = d;
     }  
     
+    /**
+     * Fonction appelée lors d'un click gauche
+     * @param idCase 
+     */
     public void leftClick(int idCase)
     {
         if(stateParty())
@@ -44,6 +52,10 @@ public class Demineur
         }
     }
 
+    /**
+     * Fonction appelée lors d'un click droit
+     * @param idCase 
+     */
     public void rightClick(int idCase)
     {
         if(stateParty())
@@ -65,12 +77,21 @@ public class Demineur
         }
     }  
 
+    /**
+     * Fonction créant une nouvelle partie
+     * @param cases
+     * @param bombes 
+     */
     public void newParty(int[] cases, int bombes)
     {    
         game.iniComponent(cases, bombes);
         game.notifierObservateurs(true);
     }  
     
+    /**
+     * Retourne l'état de l'état de la partie.
+     * @return 
+     */
     public boolean stateParty()
     {
         return game.getEtatPartie() != ModeleJeu.etat.EnJeu;

@@ -9,7 +9,10 @@ import java.util.Observer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+/**
+ * Vue HUD
+ * @author Epulapp
+ */
 public class VueHUD extends JPanel implements Observer
 { 
     private JLabel bombesRestantes;

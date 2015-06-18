@@ -19,6 +19,10 @@ import Modele.ModeleJeu;
 import static Modele.ModeleJeu.etat.*;
 import javax.swing.BorderFactory;
 
+/**
+ * Vue de la case
+ * @author Chemier Baptiste et Nguyen Aisi
+ */
 public class VueCase extends JPanel implements Observer
 {
     private ModeleJeu modele;
@@ -29,6 +33,12 @@ public class VueCase extends JPanel implements Observer
     private Color couleur;
     private boolean entered;
 
+    /**
+     * COnstructuteur
+     * @param m
+     * @param i
+     * @param icones 
+     */
     public VueCase(ModeleJeu m, int i, ImageIcon[] icones)
     {
         this.modele = m;
@@ -52,6 +62,9 @@ public class VueCase extends JPanel implements Observer
     }
     
     @Override
+    /**
+     * Mise à jour des cases
+     */
     public void update(Observable o, Object arg)
     {
         if(arg instanceof Boolean && !(boolean)arg){
@@ -81,6 +94,9 @@ public class VueCase extends JPanel implements Observer
         }
     }  
     
+    /**
+     * Affiche le nombre de nombe
+     */
     public void afficherBombe()
     {
         label.setIcon(icones[0]);
@@ -90,11 +106,17 @@ public class VueCase extends JPanel implements Observer
         }
     }
     
+    /**
+     * Affiche un drapeau 
+     */
     public void afficherDrapeau()
     {
         label.setIcon(icones[1]);
     }
    
+    /**
+     * Affiche le nombre de case piégée
+     */
     public void afficherNbPieges()
     {
         int nbPieges = modele.getGrille().getNbPieges(modele.getGrille().getCases()[id]);
@@ -144,11 +166,18 @@ public class VueCase extends JPanel implements Observer
         }      
     }
     
+    /**
+     * Supprime un drapeau
+     */
     public void dropFlag()
     {
         label.setIcon(null);
     }
     
+    /**
+     * Gère le click et appelle la fonction correspondant
+     * @param e 
+     */
     public void caseMouseClicked(MouseEvent e)
     {
         Demineur c = new Demineur(modele);

@@ -17,6 +17,10 @@ import static Modele.ModeleJeu.etat.*;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ * Vue Jeu 
+ * @author Chemier Baptiste et Nguyen Aisi
+ */
 public class VueJeu extends JFrame implements Observer 
 {
     private final ModeleJeu modele ;
@@ -33,6 +37,10 @@ public class VueJeu extends JFrame implements Observer
     private JMenuBar jMenuBar1;
     private JPanel panelHUD;
 
+    /**
+     * Constructeur
+     * @param jeu 
+     */
     public VueJeu(ModeleJeu jeu)
     {
         this.modele = jeu ;
@@ -45,6 +53,9 @@ public class VueJeu extends JFrame implements Observer
         modele.addObserver((Observer) panelHUD); 
     }  
 
+    /**
+     * Initialisation des composants
+     */
     private void initComponents()
     {
         layout = new GridBagLayout();
@@ -149,6 +160,9 @@ public class VueJeu extends JFrame implements Observer
     }  
 
     @Override
+    /**
+     * Mise à jour
+     */
     public void update(Observable o, Object arg) 
     {
         if(arg instanceof Boolean && (boolean)arg)

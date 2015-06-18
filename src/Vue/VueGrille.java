@@ -6,6 +6,10 @@ import javax.swing.*;
 import Modele.ModeleJeu;
 import java.awt.Image;
 
+/**
+ * Vue de la Grille
+ * @author Epulapp
+ */
 public class VueGrille extends JPanel
 {
     int nbCasesX;

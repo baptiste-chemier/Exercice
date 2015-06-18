@@ -2,6 +2,10 @@ package Modele;
 
 import java.util.ArrayList;
 
+/**
+ * Modele de la Grille
+ * @author Chemier Baptiste et Nguyen Aisi
+ */
 public class ModeleGrille {
     private int nbCases[];
     private ModeleCase[] cases;
@@ -11,6 +15,11 @@ public class ModeleGrille {
     private int nbDecouvertes;
     private int nbTotales;
     
+    /**
+     * Constructeur
+     * @param nbCase
+     * @param nbBombes 
+     */
     public ModeleGrille(int[] nbCase, int nbBombes)
     {
         this.nbCases = nbCase;
@@ -25,7 +34,12 @@ public class ModeleGrille {
             cases[id] = new ModeleCase(false, id);
         }
     }  
-         
+      
+    /**
+     * Récupère les voisins d'une case passée en paramètre
+     * @param courante
+     * @return 
+     */
     public ArrayList<ModeleCase> getVoisins(ModeleCase courante)
     {
         ArrayList<ModeleCase> voisins = new ArrayList();
@@ -63,6 +77,11 @@ public class ModeleGrille {
         return voisins;
     }
     
+    /**
+     * Piège la grille
+     * @param nombre
+     * @param caseVide 
+     */
     public void setBombes(int nombre, int caseVide)
     {
         if(nombre >= getCases().length-1)
@@ -88,6 +107,10 @@ public class ModeleGrille {
         }
     }  
 
+    /**
+     * Fonction de propagation lors de la découverte d'une case
+     * @param courante 
+     */
     public void propageVoisins(ModeleCase courante)
     {
         if(courante.isPiege() && !courante.isDecouverte())
